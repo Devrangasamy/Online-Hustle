@@ -1,0 +1,22 @@
+body {
+  background: #eeedec;
+  letter-spacing: 0.2em;
+  font-size: 0.8em;
+}
+
+.container {
+  width: 100%;
+}
+.icon {
+  position: relative;
+  top: -50px;
+  border-radius: 50%;
+  width: 100%;
+  margin-bottom: -50px;
+}
+.col {
+  width: 100%;
+  display: flex;
+  /* grid-template-rows: 1fr; */
+  /* grid-template-columns: 1fr 1fr 1fr 1fr 1fr; */
+}

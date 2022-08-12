@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+    />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.2.0/leaflet.css"  />
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.2.0/leaflet.js"></script>
+        <script src="dist/ors-js-client.js"></script>
+        <script src="ors_/dist/ors-js-client.js"></script>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <style>
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        font-family: Arial, Helvetica, sans-serif;
+        background-color: rgb(75, 74, 72);
+      }
+
+      .topnav {
+        overflow: hidden;
+        background-color: #e9e9e9;
+      }
+
+      .topnav a {
+        float: right;
+        display: block;
+        color: black;
+        text-align: center;
+        padding: 14px 16px;
+        text-decoration: none;
+        font-size: 17px;
+      }
+
+      .topnav a:hover {
+        background-color: #ddd;
+        color: black;
+      }
+
+      .topnav a.active {
+        background-color: #2196f3;
+        color: white;
+      }
+
+      form {
+        padding-left: 25%;
+        gap: 10px;
+        margin-top: 48px;
+      }
+
+      input[type="text"] {
+        padding: 10px;
+        font-size: 17px;
+        border: none;
+        border-radius: 50px;
+        width: 50%;
+        background-color: #ddd;
+      }
+
+      .search-container button {
+        
+        padding: 10px 10px;
+        /* margin-top: 8px; */
+        margin-right: 16px;
+        background: #ddd;
+        font-size: 17px;
+        border: none;
+        cursor: pointer;
+        border: 1px solid #000;
+
+      }
+
+      .search-container button:hover {
+        background: #ccc;
+      }
+
+      @media screen and (max-width: 600px) {
+        .search-container {
+          float: none;
+        }
+        a,
+        input[type="text"],
+        .search-container button {
+          display: block;
+          text-align: left;
+          width: 100%;
+          margin: 0;
+          padding: 14px;
+        }
+        
+        input[type="text"] {
+          border: 1px solid #000;
+        }
+      }
+        * {
+          box-sizing: border-box;
+        }
+        
+        body {
+          font: 16px Arial;  
+        }
+        
+        /*the container must be positioned relative:*/
+        .autocomplete {
+          position: relative;
+          display: inline-block;
+        }
+        
+        input {
+          border: 1px solid transparent;
+          background-color: #f1f1f1;
+          padding: 10px;
+          font-size: 16px;
+        }
+        
+        input[type=text] {
+          background-color: #f1f1f1;
+          width: 100%;
+        }
+        
+        input[type=submit] {
+          background-color: DodgerBlue;
+          color: #fff;
+          cursor: pointer;
+          height: 50%;
+          border-radius: 10%;
+        }
+        
+        .autocomplete-items {
+          position: absolute;
+          border: 1px solid #d4d4d4;
+          border-bottom: none;
+          border-top: none;
+          z-index: 99;
+          /*position the autocomplete items to be the same width as the container:*/
+          top: 100%;
+          left: 0;
+          right: 0;
+        }
+        
+        .autocomplete-items div {
+          padding: 10px;
+          cursor: pointer;
+          background-color: #fff; 
+          border-bottom: 1px solid #d4d4d4; 
+        }
+        
+        /*when hovering an item:*/
+        .autocomplete-items div:hover {
+          background-color: #e9e9e9; 
+        }
+        
+        /*when navigating through the items using the arrow keys:*/
+        .autocomplete-active {
+          background-color: DodgerBlue !important; 
+          color: #ffffff; 
+        }
+
+        body {
+          padding: 0;
+          margin: 0;
+        }
+        html, body, #map {
+          height: 100%;
+          width: 100%;
+        }
+
+        #map{
+          width: 50%;
+          height: 50%;
+          margin: auto;
+          margin-top: 10%;
+        }
+        .tbl1{
+          color:white;
+        }
+        .the{
+          background-color: #f1f1f1;
+          color:blue;
+        }
+        </style>
+  </head>
+
+  <body>
+    <div class="topnav">
+      <a class="active" href="#home">Home</a>
+      <a href="#about">About</a>
+      <a href="#contact">Contact</a>
+    </div>
+    <div class="row">
+    <div class="col-md-6">
+      <form autocomplete="off" action="javascript:void(0);">
+        <div class="autocomplete" style="width:300px;">
+          <input id="myInput" type="text" name="myCountry" placeholder="Country">
+        </div>
+        <button onclick="subHandle()" class="btn btn-success">Add</button>
+        <input type="submit" onclick="fin()">
+      </form>
+    </div>
+      <div class="col-md-6">
+        <br>
+        <br>
+      <table class="tbl1">
+        <thead class="the">
+          <th>Selected Places</th>
+        </thead>
+        <tbody>
+          <td id="r1"></td>
+          <td id="r2"></td>
+          <td id="r3"></td>
+          <td id="r4"></td>
+          <td id="r5"></td>
+          <td id="r6"></td>
+          <td id="r7"></td>
+          <td id="r8"></td>
+          <td id="r9"></td>
+        </tbody>
+      </table>
+      </div></div>
+
+      <div id="map"></div>
+
+      <script>
+        function autocomplete(inp, arr) {
+          /*the autocomplete function takes two arguments,
+          the text field element and an array of possible autocompleted values:*/
+          var currentFocus;
+          /*execute a function when someone writes in the text field:*/
+          inp.addEventListener("input", function(e) {
+              var a, b, i, val = this.value;
+              /*close any already open lists of autocompleted values*/
+              closeAllLists();
+              if (!val) { return false;}
+              currentFocus = -1;
+              /*create a DIV element that will contain the items (values):*/
+              a = document.createElement("DIV");
+              a.setAttribute("id", this.id + "autocomplete-list");
+              a.setAttribute("class", "autocomplete-items");
+              /*append the DIV element as a child of the autocomplete container:*/
+              this.parentNode.appendChild(a);
+              /*for each item in the array...*/
+              for (i = 0; i < arr.length; i++) {
+                /*check if the item starts with the same letters as the text field value:*/
+                if (arr[i].substr(0, val.length).toUpperCase() == val.toUpperCase()) {
+                  /*create a DIV element for each matching element:*/
+                  b = document.createElement("DIV");
+                  /*make the matching letters bold:*/
+                  b.innerHTML = "<strong>" + arr[i].substr(0, val.length) + "</strong>";
+                  b.innerHTML += arr[i].substr(val.length);
+                  /*insert a input field that will hold the current array item's value:*/
+                  b.innerHTML += "<input type='hidden' value='" + arr[i] + "'>";
+                  /*execute a function when someone clicks on the item value (DIV element):*/
+                  b.addEventListener("click", function(e) {
+                      /*insert the value for the autocomplete text field:*/
+                      inp.value = this.getElementsByTagName("input")[0].value;
+                      /*close the list of autocompleted values,
+                      (or any other open lists of autocompleted values:*/
+                      closeAllLists();
+                  });
+                  a.appendChild(b);
+                }
+              }
+          });
+          /*execute a function presses a key on the keyboard:*/
+          inp.addEventListener("keydown", function(e) {
+              var x = document.getElementById(this.id + "autocomplete-list");
+              if (x) x = x.getElementsByTagName("div");
+              if (e.keyCode == 40) {
+                /*If the arrow DOWN key is pressed,
+                increase the currentFocus variable:*/
+                currentFocus++;
+                /*and and make the current item more visible:*/
+                addActive(x);
+              } else if (e.keyCode == 38) { //up
+                /*If the arrow UP key is pressed,
+                decrease the currentFocus variable:*/
+                currentFocus--;
+                /*and and make the current item more visible:*/
+                addActive(x);
+              } else if (e.keyCode == 13) {
+                /*If the ENTER key is pressed, prevent the form from being submitted,*/
+                e.preventDefault();
+                if (currentFocus > -1) {
+                  /*and simulate a click on the "active" item:*/
+                  if (x) x[currentFocus].click();
+                }
+              }
+          });
+          function addActive(x) {
+            /*a function to classify an item as "active":*/
+            if (!x) return false;
+            /*start by removing the "active" class on all items:*/
+            removeActive(x);
+            if (currentFocus >= x.length) currentFocus = 0;
+            if (currentFocus < 0) currentFocus = (x.length - 1);
+            /*add class "autocomplete-active":*/
+            x[currentFocus].classList.add("autocomplete-active");
+          }
+          function removeActive(x) {
+            /*a function to remove the "active" class from all autocomplete items:*/
+            for (var i = 0; i < x.length; i++) {
+              x[i].classList.remove("autocomplete-active");
+            }
+          }
+          function closeAllLists(elmnt) {
+            /*close all autocomplete lists in the document,
+            except the one passed as an argument:*/
+            var x = document.getElementsByClassName("autocomplete-items");
+            for (var i = 0; i < x.length; i++) {
+              if (elmnt != x[i] && elmnt != inp) {
+                x[i].parentNode.removeChild(x[i]);
+              }
+            }
+          }
+          /*execute a function when someone clicks in the document:*/
+          document.addEventListener("click", function (e) {
+              closeAllLists(e.target);
+          });
+        }
+        
+        var i = 0;
+
+        var inparray = []; 
+        /*An array containing all the country names in the world:*/
+        var countries = ["Almora","Auli","Chakrata","Chopta","Kedarnath","Musoorie","Nainital","Rishikesh","Coimbatore"];
+
+        var dic = {"Almora":[79.646667,29.589241],"Auli":[79.569702,30.532801],"Chakrata":[77.869598,30.701620],"Chopta":[79.193901,30.481180],"Kedarnath":[79.066895,30.734627],"Musoorie":[78.0782906,30.4569012],"Nainital":[79.415,29.2947829],"Rishikesh":[78.2916193,30.1086537],"Coimbatore":[76.9628425, 11.0018115]}
+        
+        var m;
+
+        function subHandle(){
+          i+=1;
+          var val = document.getElementById("myInput").value;
+          inparray.push(dic[val]);
+          data = {
+            "type": "FeatureCollection",
+            "features": [
+                {
+                    "type": "Feature",
+                    "properties": {
+                        "name": val
+                    },
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": dic[val]
+                    }
+                }]}
+              m = L.geoJSON(data).addTo(map);
+          document.getElementById("r"+i.toString()).innerHTML = val;
+        }
+        //console.log(dic[countries[0]])
+        /*initiate the autocomplete function on the "myInput" element, and pass along the countries array as possible autocomplete values:*/
+        autocomplete(document.getElementById("myInput"), countries);
+            
+          var map = L.map('map').setView([29, 79], 8);
+         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+             maxZoom: 18
+         }).addTo(map);
+         function fin() {
+           //console.log(inparray);
+           let orsDirections = new Openrouteservice.Directions({ api_key: "your_api_key"}); 
+           let locarr = inparray
+           //console.log(locarr);
+           let x = orsDirections.calculate({
+              coordinates: locarr, 
+              profile: "driving-car", 
+              extra_info: ["waytype", "steepness"], 
+              format: "geojson" 
+             }) 
+             .then(function(x) { 
+               var markers = L.geoJSON(x).addTo(map); 
+               //console.log(JSON.stringify(json)); 
+             }) 
+             .catch(function(err) { 
+               console.error(err); 
+             }); 
+           };
+     </script>
+    
+  </body>
+</html>

@@ -1,0 +1,24 @@
+.ox {
+    /* border: 15px solid blu; */
+    background-color: rgba(100, 188, 194, 0.781);
+    /* display: inline-block; */
+    border-radius: 2%;
+    align-items: center;
+    margin-left: 375px;
+    margin-top: 200px;
+  }
+  .input-group{
+      padding: 20px;
+      align-items: center;
+  }
+  .form{
+      display: flex;
+      flex-direction: column;
+      /* justify-content:center; */
+      align-items:center;
+  }
+
+  .header
+  {
+      color: rgba(255, 0, 0, 0.856);
+  }

@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+      integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+      crossorigin="anonymous"
+    />
+    <link rel="stylesheet" href="weather.css" />
+    <title>weather</title>
+  </head>
+  <body>
+    <div class="container my-5 mx-auto">
+      <h1 class="text-muted text-center my-4">weather</h1>
+      <form class="change-location my-4 text-center text-muted">
+        <label for="city">Enter a location</label>
+        <input
+          type="text"
+          name="city"
+          class="form-control p-4"
+          autocomplete="off"
+        />
+      </form>
+      <div class="weather row gx-2">
+        <div class="col">
+          <div class="card">
+            <h5 class="card-title p-2">Date</h5>
+            <img
+              src="http://openweathermap.org/img/wn/10d@4x.png"
+              class="card-img-top"
+              alt="Weather description"
+            />
+            <div class="card-body">
+              <h3 class="card-title">Weather Label</h3>
+              <p class="card-text">High Temp Low Temp</p>
+              <p class="card-text">HighFeels like</p>
+              <p class="card-text">Pressure</p>
+              <p class="card-text">Humidty</p>
+              <p class="card-text">Wind speed and direction</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    <script src="forecast.js"></script>
+    <script src="app.js"></script>
+  </body>
+</html>
